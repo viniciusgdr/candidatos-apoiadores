@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Canvas, loadImage, loadFont, Image } from "canvas-constructor/cairo";
-
+import { Canvas, loadImage, loadFont, Image } from "canvas-constructor/skia";
 function toBuffer(ab: ArrayBuffer) {
     const buf = Buffer.alloc(ab.byteLength);
     const view = new Uint8Array(ab);
@@ -33,8 +32,8 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    loadFont('./assets/fonts/edosz.ttf', { family: "Edo SZ" })
-    loadFont("./assets/fonts/BebasNeue-Regular.ttf", { family: "BebasNeue" })
+    loadFont("Edo SZ" , './assets/fonts/edosz.ttf', )
+    loadFont("BebasNeue", "./assets/fonts/BebasNeue-Regular.ttf")
     let candidato = req.query.type as string
     let text = req.query.text as string
 
@@ -106,6 +105,6 @@ export default async function handler(
         canvas.printText(text, values.x, 480)
     }
     res.status(200).json({
-        data: 'data:image/png;base64,' + (await canvas.toBufferAsync()).toString('base64')
+        data: 'data:image/png;base64,' + (await canvas.pngAsync()).toString('base64')
     })
 }
