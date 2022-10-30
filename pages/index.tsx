@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, GetServerSidePropsContext, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useState } from "react";
@@ -68,7 +68,7 @@ const Home = ({ candidates }: { candidates: DataPicture[] }) => {
 							disabled={imageText == ""}
 							onClick={async () => {
 								setCandidate((prev) => ({ ...prev, img: "" }));
-								let url = `http://localhost:3000/api/generate?text=${imageText}&image=${candidate.imgPreview.img}&x=${candidate.imgPreview.x}&y=${candidate.imgPreview.y}&type=${candidate.type}`;
+								let url = `/api/generate?text=${imageText}&image=${candidate.imgPreview.img}&x=${candidate.imgPreview.x}&y=${candidate.imgPreview.y}&type=${candidate.type}`;
 								setGeneratingImage(true);
 								let request = await fetch(url);
 								let data = await request.json();
@@ -158,8 +158,11 @@ const Home = ({ candidates }: { candidates: DataPicture[] }) => {
 	);
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-	let request = await fetch("http://localhost:3000/api/candidates");
+export const getServerSideProps: GetServerSideProps = async ({
+	req,
+	res,
+}: GetServerSidePropsContext) => {
+	let request = await fetch("http://" + req.headers.host + "/api/candidates");
 	return {
 		props: {
 			candidates: await request.json(),
