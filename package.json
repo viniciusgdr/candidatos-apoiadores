@@ -6,8 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "canvas": "^2.10.1",
+    "canvas-constructor": "^7.0.0",
+    "daisyui": "^2.36.1",
     "next": "latest",
     "react": "18.2.0",
+    "react-daisyui": "^2.4.4",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
