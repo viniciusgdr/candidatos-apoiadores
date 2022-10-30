@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Canvas, loadImage, loadFont, Image } from "canvas-constructor/skia";
+import { Canvas, loadImage, loadFont, Image } from "canvas-constructor/napi-rs";
 function toBuffer(ab: ArrayBuffer) {
     const buf = Buffer.alloc(ab.byteLength);
     const view = new Uint8Array(ab);
@@ -32,8 +32,8 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    loadFont("Edo SZ" , './assets/fonts/edosz.ttf', )
-    loadFont("BebasNeue", "./assets/fonts/BebasNeue-Regular.ttf")
+    loadFont('./assets/fonts/edosz.ttf', "Edo SZ" )
+    loadFont("./assets/fonts/BebasNeue-Regular.ttf","BebasNeue")
     let candidato = req.query.type as string
     let text = req.query.text as string
 
